@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analytics Hub 📊</title>
+    <style>
+        /* CSS for styling and animations */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(to right, #ff6b6b, #ff8e53);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: slideIn 1s ease-out;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Main content */
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        h2 {
+            color: #ff6b6b;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Tableau section */
+        .tableau-section {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .tableau-section h2 {
+            font-size: 2em;
+            color: #6e8efb;
+            animation: bounce 2s infinite;
+        }
+
+        .tableau-placeholder {
+            width: 100%;
+            height: 600px;
+            border: 2px solid #a777e3;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .tableau-placeholder:hover {
+            transform: scale(1.02);
+        }
+
+        /* Insights section */
+        .insights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .insight-card {
+            background: linear-gradient(135deg, #f3e7e9, #e3eeff);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container, nav { width: 90%; }
+            header h1 { font-size: 2em; }
+            .tableau-placeholder { height: 400px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Data Analytics Hub 🚀</h1>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#home">Home 🏠</a>
+        <a href="#tableau">Tableau 📊</a>
+        <a href="#insights">Insights 💡</a>
+        <a href="#about">About ℹ️</a>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container">
+        <!-- Home Section -->
+        <section id="home">
+            <h2>Welcome to Our Analytics World 🌍</h2>
+            <p>Explore cutting-edge data visualizations and uncover insights that drive decisions! Our platform brings data to life with interactive dashboards and fun analytics. Ready to dive in? 😄</p>
+        </section>
+
+        <!-- Tableau Section -->
+        <section id="tableau" class="tableau-section">
+            <h2>Interactive Tableau Dashboard 📈</h2>
+            <p>Check out our featured Tableau visualization below! Hover over charts, filter data, and discover trends in real-time. It's data magic! ✨</p>
+            <!-- Replace the src with your actual Tableau public embed link -->
+            <div class="tableau-placeholder">
+                <iframe src="https://public.tableau.com/views/YOUR_TABLEAU_VISUALIZATION/Sheet1?:embed=y&:display_count=n&:origin=viz_share_link" width="100%" height="100%" frameborder="0"></iframe>
+            </div>
+        </section>
+
+        <!-- Insights Section -->
+        <section id="insights">
+            <h2>Key Insights 💡</h2>
+            <div class="insights">
+                <div class="insight-card">
+                    <h3>Trend Analysis 📉</h3>
+                    <p>Discover patterns that shape the future! Our data shows what's hot and what's not. 🔥</p>
+                </div>
+                <div class="insight-card">
+                    <h3>Performance Metrics 🏆</h3>
+                    <p>Track KPIs like a pro and boost your success rate! 🚀</p>
+                </div>
+                <div class="insight-card">
+                    <h3>Customer Insights 🧑‍🤝‍🧑</h3>
+                    <p>Understand your audience better with deep dive analytics. 😎</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <h2>About Us ℹ️</h2>
+            <p>We're a team passionate about turning raw data into actionable insights! Our mission is to make analytics fun, accessible, and impactful for everyone. Join us on this data adventure! 🎉</p>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Data Analytics Hub | Made with ❤️ and 📊</p>
+    </footer>
+
+    <!-- JavaScript for interactivity -->
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionId = this.getAttribute('href').substring(1);
+                document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Alert on Tableau section hover
+        const tableauSection = document.querySelector('.tableau-placeholder');
+        tableauSection.addEventListener('mouseenter', () => {
+            console.log('Explore the Tableau dashboard! 😄');
+        });
+
+        // Dynamic greeting based on time
+        const greeting = document.createElement('p');
+        const hour = new Date().getHours();
+        greeting.textContent = hour < 12 ? 'Good Morning! Ready for some data fun? ☀️' : 
+                              hour < 18 ? 'Good Afternoon! Let’s crunch those numbers! 🌞' : 
+                              'Good Evening! Time for some late-night insights! 🌙';
+        document.querySelector('#home').appendChild(greeting);
+    </script>
+</body>
+</html>
