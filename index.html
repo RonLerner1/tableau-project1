@@ -94,13 +94,13 @@
             border: 2px solid #a777e3;
             border-radius: 10px;
             overflow: hidden;
-            transition: transform 0.3s;
             position: relative;
             background: #f0f0f0;
         }
 
         .tableau-placeholder:hover {
             transform: scale(1.02);
+            transition: transform 0.3s;
         }
 
         .tableau-loading {
@@ -110,7 +110,7 @@
             transform: translate(-50%, -50%);
             color: #6e8efb;
             font-size: 1.2em;
-            display: block;
+            z-index: 1;
         }
 
         .tableau-fallback {
@@ -122,6 +122,22 @@
             color: #ff6b6b;
             font-size: 1.2em;
             text-align: center;
+            z-index: 1;
+        }
+
+        .tableau-fallback a, .tableau-fallback button {
+            color: #6e8efb;
+            text-decoration: none;
+            border: 1px solid #6e8efb;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .tableau-fallback button {
+            background: none;
+            cursor: pointer;
         }
 
         .insights {
@@ -150,7 +166,6 @@
             text-align: center;
             padding: 10px;
             position: relative;
-            bottom: 0;
             width: 100%;
         }
 
@@ -196,21 +211,20 @@
 
         <section id="tableau" class="tableau-section">
             <h2>Interactive Tableau Dashboard 📈</h2>
-            <p>Check out our featured Tableau visualization below! Hover over charts, filter data, and discover trends in real-time. It's data magic! ✨</p>
+            <p>Check out our featured visualization below! Hover over charts, filter data, and discover trends in real-time. It's data magic! ✨</p>
             <div class="tableau-placeholder" id="tableauViz">
-                <div class="tableau-loading">Loading Dashboard... ⏳</div>
+                <div class="tableau-loading">Connecting to Tableau... ⏳</div>
                 <iframe 
-                    src="https://public.tableau.com/views/Book1_17443631741680/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" 
+                    src="https://public.tableau.com/views/Book1_17443631741680/Dashboard1?:language=en-US&:embed=y&:showVizHome=no" 
                     width="100%" 
                     height="100%" 
                     frameborder="0" 
                     allowfullscreen
-                    allow="encrypted-media; fullscreen"
                 ></iframe>
                 <div class="tableau-fallback">
-                    <p>Oops! The dashboard didn’t load. 😅</p>
-                    <p>Try <a href="https://public.tableau.com/views/Book1_17443631741680/Dashboard1" target="_blank">viewing it directly</a> or refreshing the page.</p>
-                    <p><button onclick="retryTableau()">Retry Loading</button></p>
+                    <p>Oops! We couldn’t load the dashboard. 😅</p>
+                    <p>View it <a href="https://public.tableau.com/views/Book1_17443631741680/Dashboard1" target="_blank">directly on Tableau Public</a>.</p>
+                    <p><button onclick="retryTableau()">Retry Connection</button></p>
                 </div>
             </div>
         </section>
@@ -243,7 +257,7 @@
         <p>© 2025 Data Analytics Hub | Made with ❤️ and 📊</p>
     </footer>
 
-    <!-- Tableau JavaScript API (Optional, uncomment to use) -->
+    <!-- Tableau JavaScript API (Optional, uncomment to try) -->
     <!--
     <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
     -->
@@ -258,52 +272,57 @@
             });
         });
 
-        // Tableau iframe load handling
+        // Tableau connection handling
         const tableauIframe = document.querySelector('.tableau-placeholder iframe');
         const loadingIndicator = document.querySelector('.tableau-loading');
         const fallback = document.querySelector('.tableau-fallback');
 
-        function checkTableauLoad() {
+        function checkTableauConnection() {
+            console.log('Connecting to public.tableau.com...');
             loadingIndicator.style.display = 'block';
             fallback.style.display = 'none';
-            tableauIframe.style.display = 'block';
+            tableauIframe.style.opacity = '0';
 
             setTimeout(() => {
                 try {
-                    if (!tableauIframe.contentDocument || tableauIframe.contentDocument.body.innerHTML === '') {
+                    const iframeDoc = tableauIframe.contentDocument || tableauIframe.contentWindow.document;
+                    if (!iframeDoc || iframeDoc.body.innerHTML === '' || !iframeDoc.querySelector('canvas')) {
+                        console.error('Tableau load failed: No content');
                         loadingIndicator.style.display = 'none';
                         fallback.style.display = 'block';
-                        tableauIframe.style.display = 'none';
-                        console.warn('Tableau failed to load: Empty content');
+                        tableauIframe.style.opacity = '0';
                     } else {
+                        console.log('Tableau loaded successfully');
                         loadingIndicator.style.display = 'none';
+                        tableauIframe.style.opacity = '1';
                     }
                 } catch (e) {
+                    console.error('Tableau error:', e.message);
                     loadingIndicator.style.display = 'none';
                     fallback.style.display = 'block';
-                    tableauIframe.style.display = 'none';
-                    console.warn('Tableau load error:', e.message);
+                    tableauIframe.style.opacity = '0';
                 }
-            }, 6000); // Wait 6 seconds
+            }, 5000);
         }
 
-        tableauIframe.addEventListener('load', checkTableauLoad);
+        tableauIframe.addEventListener('load', checkTableauConnection);
 
-        // Retry loading function
+        // Retry connection
         window.retryTableau = function() {
-            tableauIframe.src = tableauIframe.src; // Reload iframe
-            checkTableauLoad();
+            console.log('Retrying Tableau connection...');
+            tableauIframe.src = tableauIframe.src;
+            checkTableauConnection();
         };
 
         // Timeout fallback
         setTimeout(() => {
             if (loadingIndicator.style.display === 'block') {
+                console.error('Tableau connection timed out');
                 loadingIndicator.style.display = 'none';
                 fallback.style.display = 'block';
-                tableauIframe.style.display = 'none';
-                console.warn('Tableau load timeout');
+                tableauIframe.style.opacity = '0';
             }
-        }, 12000); // Final fallback after 12 seconds
+        }, 10000);
 
         // Dynamic greeting
         const greeting = document.createElement('p');
@@ -313,8 +332,9 @@
                               'Good Evening! Time for some late-night insights! 🌙';
         document.querySelector('#home').appendChild(greeting);
 
-        /* Tableau JavaScript API (Uncomment to use instead of iframe)
+        /* Tableau JavaScript API (Uncomment to try if iframe fails)
         function initViz() {
+            console.log('Trying Tableau JS API...');
             const containerDiv = document.getElementById('tableauViz');
             const vizUrl = 'https://public.tableau.com/views/Book1_17443631741680/Dashboard1';
             const options = {
@@ -325,19 +345,25 @@
                 onFirstInteractive: () => {
                     loadingIndicator.style.display = 'none';
                     console.log('Tableau JS API loaded');
+                },
+                onError: (err) => {
+                    console.error('Tableau JS API error:', err);
+                    loadingIndicator.style.display = 'none';
+                    fallback.style.display = 'block';
                 }
             };
 
             try {
                 new tableau.Viz(containerDiv, vizUrl, options);
+                tableauIframe.style.display = 'none'; // Hide iframe if using JS API
             } catch (e) {
+                console.error('Tableau JS API init failed:', e);
                 loadingIndicator.style.display = 'none';
                 fallback.style.display = 'block';
-                console.warn('Tableau JS API error:', e.message);
             }
         }
 
-        // Uncomment to initialize JS API
+        // Uncomment to use JS API
         // if (window.tableau) initViz();
         */
     </script>
